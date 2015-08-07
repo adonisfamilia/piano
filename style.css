@@ -1,0 +1,11 @@
+rect {
+  stroke: black;
+}
+
+rect.white {
+  fill: white;
+}
+
+rect.black {
+  fill: black;
+}
