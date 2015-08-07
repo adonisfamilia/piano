@@ -1,21 +1,27 @@
 var context = new AudioContext();
-
 var oscillator;
-
 var mouseDown = 0;
+var playing = 0;
+
+function stop() {
+  if (playing == 1) {
+  	oscillator.stop(context.currentTime);
+  	--playing;
+  }
+}
 
 document.onmousedown = function() {
   ++mouseDown;
 }
 
 document.onmouseup = function() {
-  oscillator.stop(context.currentTime);
+  stop();
   --mouseDown;
 }
 
 function play(freq, clicked) {
   if (mouseDown == 1) {
-    oscillator.stop(context.currentTime);
+    stop();
   }
   if (mouseDown == 1 || clicked == true) {
     oscillator = context.createOscillator();
@@ -23,5 +29,6 @@ function play(freq, clicked) {
     oscillator.type = 'sawtooth';
     oscillator.frequency.value = Number(freq);
     oscillator.start(context.currentTime);
+    ++playing;
   }
 }
