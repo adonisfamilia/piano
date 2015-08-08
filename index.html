@@ -113,10 +113,10 @@
       <rect onmouseover="play('3729.31', false, '86')" onmousedown="play('3729.31', true, '86')" onmouseout="stop()" class="black" id="86" x="1146.75" y="0" width="13" height="80"/>
     </svg>
 
-    <select id="instrument">
-      <option value="disspiano" onclick="load('0')">Dissonant Piano</option>
-      <option value="throaty" onclick="load('1')">Throaty</option>
-      <option value="trombone" onclick="load('2')">Trombone</option>
+    <select id="instrument" onchange="if (this.selectedIndex) changeIns(this.selectedIndex);">
+      <option value="disspiano">Dissonant Piano</option>
+      <option value="throaty">Throaty</option>
+      <option value="trombone">Trombone</option>
     </select>
 
   </body>

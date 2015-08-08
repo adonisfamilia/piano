@@ -4,42 +4,54 @@ var mouseDown = 0;
 var playing = 0;
 var lastKey;
 var tables;
+var currInsTable;
 
 function loadJSON(file, callback) {
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', file, true);
-    xobj.onreadystatechange = function () {
-          if (xobj.readyState == 4 && xobj.status == "200") {
+  var xobj = new XMLHttpRequest();
+  xobj.overrideMimeType("application/json");
+  xobj.open('GET', file, true);
+  xobj.onreadystatechange = function () {
+    if (xobj.readyState == 4 && xobj.status == "200") {
 
-            callback(xobj.responseText);
-          }
-    };
-    xobj.send(null);
- }
-
+      callback(xobj.responseText);
+    }
+  };
+  xobj.send(null);
+}
 
 function load() {
-    loadJSON("tables.json", function(response) {
-        var json = JSON.parse(response);
-        console.log(json.tables[0]);
-        return json;
-    });
+  loadJSON("tables.json", function(response) {
+    var json = JSON.parse(response);
+    console.log(json.table[0]);
+    return json;
+  });
 }
 
 tables = load();
+console.log(tables);
 
+function changeIns(index) {
+  console.log("clicked");
+  var c = tables.table[Number(index)].real.length;
+  var real = new Float32Array(c);
+  var imag = new Float32Array(c);
+  real = tables.table[Number(index)].real;
+  imag = tables.table[Number(index)].imag;
+  currInsTable = context.createPeriodicWave(real, imag);
+}
+
+changeIns(0);
 
 function stop() {
   if (playing == 1) {
-  	oscillator.stop(context.currentTime);
-	switch(lastKey.className.animVal) {
-	  case "white": lastKey.style.fill = "white"; break;
-	  case "black": lastKey.style.fill = "black"; break;
-	  default: lastKey.style.fill = "blue";
-	}
-  	--playing;
-	return;
+    oscillator.stop(context.currentTime);
+    switch(lastKey.className.animVal) {
+      case "white": lastKey.style.fill = "white"; break;
+      case "black": lastKey.style.fill = "black"; break;
+      default: lastKey.style.fill = "blue";
+    }
+    --playing;
+    return;
   }
   switch(lastKey.className.animVal) {
     case "white": lastKey.style.fill = "white"; break;
@@ -67,7 +79,7 @@ function play(freq, clicked, id) {
   if (mouseDown == 1 || clicked == true) {
     oscillator = context.createOscillator();
     oscillator.connect(context.destination);
-    oscillator.type = 'square';
+    oscillator.setPeriodicWave(currInsTable);
     oscillator.frequency.value = Number(freq);
     oscillator.start(context.currentTime);
     switch(key.className.animVal) {
