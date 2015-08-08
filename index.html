@@ -6,7 +6,7 @@
   </head>
   <body>
 
-    <svg style="margin-left:auto; margin-right:auto; display:block;" width="1196" height="120">
+    <svg width="1196" height="120" >
 
       <rect onmouseover="play('27.5', false, '1')" onmousedown="play('27.5', true, '1')" onmouseout="stop()" class="white" id="1" x="0" y="0" width="23" height="120"/>
       <rect onmouseover="play('30.8677', false, '3')" onmousedown="play('30.8677', true, '3')" onmouseout="stop()" class="white" id="3" x="23" y="0" width="23" height="120"/>
@@ -112,6 +112,12 @@
       <rect onmouseover="play('3322.44', false, '84')" onmousedown="play('3322.44', true, '84')" onmouseout="stop()" class="black" id="84" x="1120.25" y="0" width="13" height="80"/>
       <rect onmouseover="play('3729.31', false, '86')" onmousedown="play('3729.31', true, '86')" onmouseout="stop()" class="black" id="86" x="1146.75" y="0" width="13" height="80"/>
     </svg>
+
+    <select id="instrument">
+      <option value="disspiano" onclick="load('0')">Dissonant Piano</option>
+      <option value="throaty" onclick="load('1')">Throaty</option>
+      <option value="trombone" onclick="load('2')">Trombone</option>
+    </select>
 
   </body>
 </html>
