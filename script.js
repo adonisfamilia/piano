@@ -3,6 +3,32 @@ var oscillator;
 var mouseDown = 0;
 var playing = 0;
 var lastKey;
+var tables;
+
+function loadJSON(file, callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', file, true);
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);
+ }
+
+
+function load() {
+    loadJSON("tables.json", function(response) {
+        var json = JSON.parse(response);
+        console.log(json);
+        return json;
+    });
+}
+
+tables = load();
+
 
 function stop() {
   if (playing == 1) {
@@ -41,7 +67,7 @@ function play(freq, clicked, id) {
   if (mouseDown == 1 || clicked == true) {
     oscillator = context.createOscillator();
     oscillator.connect(context.destination);
-    oscillator.type = 'sawtooth';
+    oscillator.type = 'square';
     oscillator.frequency.value = Number(freq);
     oscillator.start(context.currentTime);
     switch(key.className.animVal) {
