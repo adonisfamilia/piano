@@ -22,7 +22,7 @@ function loadJSON(file, callback) {
 function load() {
     loadJSON("tables.json", function(response) {
         var json = JSON.parse(response);
-        console.log(json);
+        console.log(json.tables[0]);
         return json;
     });
 }
