@@ -3,7 +3,6 @@ var oscillator;
 var mouseDown = 0;
 var playing = 0;
 var lastKey;
-var tables;
 var currInsTable;
 
 function loadJSON(file, callback) {
@@ -19,28 +18,20 @@ function loadJSON(file, callback) {
   xobj.send(null);
 }
 
-function load() {
+function load(index) {
   loadJSON("tables.json", function(response) {
     var json = JSON.parse(response);
-    console.log(json.table[0]);
-    return json;
+    changeIns(index, json)
   });
 }
 
-tables = load();
-console.log(tables);
+load(0);
 
-function changeIns(index) {
-  console.log("clicked");
-  var c = tables.table[Number(index)].real.length;
-  var real = new Float32Array(c);
-  var imag = new Float32Array(c);
-  real = tables.table[Number(index)].real;
-  imag = tables.table[Number(index)].imag;
+function changeIns(index, json) {
+  var real = new Float32Array(json.table[Number(index)].real);
+  var imag = new Float32Array(json.table[Number(index)].imag);
   currInsTable = context.createPeriodicWave(real, imag);
 }
-
-changeIns(0);
 
 function stop() {
   if (playing == 1) {
